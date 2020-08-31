@@ -1,0 +1,333 @@
+set nocompatible              " be iMproved, required
+set encoding=utf-8
+filetype plugin on    " required
+filetype indent on    " required
+
+" => References {{{
+" htts://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+" htts://learnvimscriptthehardway.stevelosh.com
+" }}}
+" => General {{{
+
+" Enable filetype plugins
+filetype indent on   " required
+filetype plugin on   " required
+
+" Set to auto read when a file is changed from the outside
+set autoread
+
+" With a map leader it's possible to do extra key combinations
+let mapleader = ","
+let localleader = "\\"
+" }}}
+" => VIM user interface {{{
+
+set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=DarkGrey
+"highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+" Print line number of cursor position
+set number
+
+" Print above/below line numbers of cursor position
+set rnu
+
+" Lines of padding for cursor scrolling
+set scrolloff=2
+
+" Always show current position
+set ruler
+
+" Highlight search results
+set hlsearch
+set incsearch
+
+" Turn on the Wild menu
+set wildmenu
+
+"fixdel
+set backspace=indent,eol,start
+cnoremap  <BS>
+inoremap  <BS>
+nnoremap  <BS>
+
+set diffopt+=vertical
+
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc  
+" }}}
+" => Moving around, tabs, windows, and buffers {{{
+
+set splitbelow
+set splitright
+
+nnoremap <leader>u :UndotreeShow<cr>
+nnoremap <leader>ss :w<cr>
+
+" Disable highlight when <leader><cr> is pressed
+nnoremap <silent> <leader><cr> :set hls!<cr>
+
+" Smart way to move between windows
+nnoremap <silent> <C-j> :wincmd j<cr>
+nnoremap <silent> <C-k> :wincmd k<cr>
+nnoremap <silent> <C-h> :wincmd h<cr>
+nnoremap <silent> <C-l> :wincmd l<cr>
+
+" Navigate to nearby buffers
+nnoremap <leader>l :bnext<cr>
+nnoremap <leader>h :bprevious<cr>
+
+" Open / Navigate quickfix list
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprevious<cr>
+
+" Open / Navigate location list
+nnoremap <leader>lo :lopen<cr>
+nnoremap <leader>ln :lnext<cr>
+nnoremap <leader>lp :lprevious<cr>
+
+" => FZF mappings / shortcuts {{{
+nnoremap <leader>: :History:<CR>
+nnoremap <leader>/ :History//<CR>
+nnoremap <leader>? :History?<CR>
+
+let g:fzf_action = {
+            \ 'ctrl-j': 'preview-page-down',
+            \ 'ctrl-k': 'preview-page-up',
+            \ 'ctrl-space': 'select-all',}
+
+" Fuzzy search files in pwd
+nnoremap <leader>lf :Files<cr>
+" Open buffer list
+nnoremap <leader>ls :Buffers<cr>
+" Search lines across open buffers
+nnoremap <leader>ll :Lines<cr>
+" Search lines across open buffers for cursor word
+nnoremap <leader>lL :execute "Lines " . expand("<cword>")<cr>
+" Search lines in current buffers
+nnoremap <leader>lb :BLines<cr>
+" Search lines across open buffers for cursor word
+nnoremap <leader>lB :execute "BLines " . expand("<cword>")<cr>
+" Search help docs by topic
+nnoremap <leader>lh :Helptags<cr>
+" Open command history
+nnoremap q: :History:<cr>
+" Open search history
+nnoremap q/ :History/<cr>
+" Ripgrep is the best
+nnoremap <leader>rg :Rg<cr>
+" Ripgrep search
+nnoremap <leader>rG :execute "Rg " . expand("<cword>") <cr>
+" Browse marks
+nnoremap <leader>M :Marks<cr>
+" Browse user mappings
+nnoremap <leader>m :Maps<cr>
+" Browse user mappings
+nnoremap <leader>lc :Colors<cr>
+" }}}
+
+" => FZF git mappings {{{
+" Git files (all)
+nnoremap <localleader>ga :GitFiles<cr>
+" Git files (changed)
+nnoremap <localleader>gs :GitFiles?<cr>
+" List commits for all project files
+nnoremap <localleader>gs :Commits<cr>
+" List commits for current buffer file
+nnoremap <localleader>gs :BCommits<cr>
+" }}}
+
+" GIT {{{
+nnoremap <leader>gg :Git<cr>
+nnoremap <leader>gp :GitGutterPreviewHunk<cr>
+nnoremap <leader>gu :GitGutterUndoHunk<cr>
+nnoremap <leader>gs :GitGutterStageHunk<cr>
+nnoremap <leader>gq :GitGutterQuickFix<cr>
+" }}}
+
+" Windows
+nnoremap <leader>we :botright vnew<cr>
+nnoremap <leader>wh :botright vnew \| h \| wincmd p \| close<cr>
+
+" Useful mappings for managing tabs
+nnoremap <leader>te :tabedit<cr>
+nnoremap <leader>th :tabedit \| h \| only<cr>
+nnoremap <leader>tt :tabedit \| terminal <cr>
+nnoremap <leader>to :tabonly<cr>
+nnoremap <leader>tc :tabclose<cr>
+" }}}
+" => Editing mappings {{{
+
+" Move line down
+nnoremap - ddp
+" Move line up
+nnoremap _ ddkP
+" Double quote visualized area
+vnoremap <leader>" <esc>`<i"<esc>`>i"<esc>
+" }}}
+" => VIM command line configuration {{{
+
+" Bash like keys for the command line
+cnoremap <C-A> <Home>
+cnoremap <C-E> <End>
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
+" }}}
+" => Live vim modifying {{{
+nnoremap <leader>ev :tabe $MYVIMRC<cr>
+nnoremap <leader>sv :source $MYVIMRC<cr>
+nnoremap <leader>sc :source %<cr>
+" }}}
+" => Commands to surround words {{{
+nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+nnoremap <leader>' viw<esc>a'<esc>bi'<esc>lel
+nnoremap <leader>( viw<esc>a><esc>bi(<esc>lel
+nnoremap <leader>{ viw<esc>a}<esc>bi{<esc>lel
+" }}}
+" => PUT IN PYTHON dir {{{
+augroup pythongroup
+	autocmd!
+	autocmd FileType python :iabbrev <buffer> iff if:<left>
+	autocmd FileType python nnoremap <buffer> <localleader>c I#<esc>
+augroup END
+" }}}
+" => Statusline {{{
+function! GitBranch()
+	return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+endfunction
+
+function! GitBranch()
+	return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
+set laststatus=2
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%{StatuslineGit()}
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m\
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\
+" }}}
+" => Plugins w/ Plug {{{
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'dracula/vim'
+Plug 'mbbill/undotree'
+Plug 'morhetz/gruvbox'
+Plug 'jlanzarotta/bufexplorer'
+call plug#end()
+
+let g:fzf_action = {
+    \ 'ctrl-j': 'preview-page-down',
+    \ 'ctrl-k': 'preview-page-up', }
+
+" }}}
+" => Plugins w/ Vundle {{{
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-commentary'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'scrooloose/nerdtree'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'w0rp/ale'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+" }}}
+" => NERDTree {{{
+nnoremap <C-n> :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
+" }}}
+" => Display {{{
+colorscheme dracula
+highlight ExtraWhitespace ctermbg=DarkCyan
+match ExtraWhitespace /\s\+$/
+syntax on
+" }}}
+" => Folding {{{
+set foldmethod=marker
+set foldlevel=99
+set encoding=utf-8
+"
+" Show docstring when folded
+let g:SimpylFold_docstring_preview=1
+" }}}
+" => Highlighting {{{
+let hlstate=0
+nnoremap <c-c> :if (hlstate%2 == 0) \| nohlsearch \| else \| set hlsearch \| endif \| let hlstate=hlstate+1<cr>
+
+" Match trailing whitespace   
+highlight WhiteSpace ctermbg=grey guibg=grey
+nnoremap <silent> <leader>w :match WhiteSpace /\v\s+$/ <CR>
+nnoremap <silent> <leader>W :match <CR>
+" }}}
+" => Misc {{{
+" Search defaults to verymagic regex patterns
+nnoremap / /\v\c
+nnoremap ? ?\v\c
+nnoremap _ ddkP
+nnoremap - ddjP
+nnoremap <leader>zz :mksession!<cr>
+" }}}
+" => Vimscript file settings {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+" }}}
+" => All other file settings {{{
+augroup filetypes_all
+    autocmd!
+    autocmd BufNewFile,BufRead *.erl
+        \ set tabstop=4 |
+        \ set softtabstop=4 |
+        \ set shiftwidth=4 |
+        \ set textwidth=79 |
+        \ set expandtab |
+        \ set autoindent |
+        \ set fileformat=unix
+    autocmd BufNewFile,BufRead *.py
+        \ set tabstop=4 |
+        \ set softtabstop=4 |
+        \ set shiftwidth=4 |
+        \ set textwidth=79 |
+        \ set expandtab |
+        \ set autoindent |
+        \ set fileformat=unix
+    autocmd BufNewFile,BufRead *.js
+        \ set tabstop=2 |
+        \ set softtabstop=2 |
+        \ set shiftwidth=2
+    autocmd BufNewFile,BufRead *.html
+        \ set tabstop=2 |
+        \ set softtabstop=2 |
+        \ set shiftwidth=2
+    autocmd BufNewFile,BufRead *.css
+        \ set tabstop=2 |
+        \ set softtabstop=2 |
+        \ set shiftwidth=2
+augroup END
+" }}}
+" => Modeline {{{
+set tabstop=4
+set textwidth=78
+set expandtab
+" }}}
